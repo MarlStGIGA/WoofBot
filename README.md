@@ -6,7 +6,7 @@ An edited version of Airhorn Bot, a bot for Discord.
 ###Zingers
 
 ####!airhorn
-Same look, same great taste.
+New bot, same great sounds.
 
 ####!canned | !laughter
 Plays canned laughter for hilarious jokes.
