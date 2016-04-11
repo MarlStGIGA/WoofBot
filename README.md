@@ -14,6 +14,9 @@ Plays canned laughter for hilarious jokes.
 ####!fart
 For shitty zingers.
 
+####!goodjob | !gj
+Konata's über cute "Good Job."
+
 ####!siren
 Shots fired, somebody call the cops.
 
@@ -31,3 +34,8 @@ Has a chance to play the rainbow ride magic missile version.
 
 ####!woo
 Plays a woo sound, it's so funny!
+
+###Other
+
+####!whine
+When you're just too lazy to whine yourself.
