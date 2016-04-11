@@ -1,5 +1,5 @@
 #WoofBot
-An edited version of Airhorn Bot, a bot for Discord.
+An edited version of [Airhorn Bot](https://github.com/hammerandchisel/airhornbot) for [Discord](http://www.discordapp.com/).
 
 ##Commands
 
