@@ -1,9 +1,10 @@
 #WoofBot
-An edited version of [Airhorn Bot](https://github.com/hammerandchisel/airhornbot) for [Discord](http://www.discordapp.com/).
+An edited version of [Airhorn Bot](https://airhorn.solutions/) for [Discord](https://www.discordapp.com/).
 
 ##Commands
 
 ###Zingers
+For those sick jokes and puns. :fire:
 
 ####!airhorn
 New bot, same great sounds.
@@ -21,6 +22,11 @@ Konata's über cute "Good Job."
 Shots fired, somebody call the cops.
 
 ###Memes
+hilARIOUS :frog:MEmES:frog::ok_hand::joy:
+
+####!daddy | !trump
+Quotes from the one and only Donald Trump, aka "daddy."
+Has a random chance to play some of Hitler's speeches.
 
 ####!doubledonk | !donk
 Plays the Double Donk noise from Team Fortress 2.
@@ -34,6 +40,16 @@ Has a chance to play the rainbow ride magic missile version.
 
 ####!woo
 Plays a woo sound, it's so funny!
+
+###Music
+It's music, nothing's wrong with music. :musical_note:
+
+####!wonderwall
+Because maybe, you're gonna be the one that saves me.<br>
+Plays a random section of Wonderwall by Oasis.
+
+####!jeopardy | !waiting
+The quality Jeopardy theme.
 
 ###Other
 
