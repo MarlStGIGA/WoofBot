@@ -20,23 +20,23 @@ import (
 )
 
 var (
-	// discordgo session
+//	discordgo session
 	discord *discordgo.Session
 
-	// Redis client connection (used for stats)
+//	Redis client connection (used for stats)
 	rcli *redis.Client
 
-	// Map of Guild id's to *Play channels, used for queuing and rate-limiting guilds
+//	Map of Guild id's to *Play channels, used for queuing and rate-limiting guilds
 	queues map[string]chan *Play = make(map[string]chan *Play)
 
-	// Sound encoding settings
+//	Sound encoding settings
 	BITRATE        = 128
 	MAX_QUEUE_SIZE = 6
 
-	// Owner
+//	Owner
 	OWNER string
 
-	// Shard (or -1)
+//	Shard (or -1)
 	SHARDS []string = make([]string, 0)
 )
 
@@ -47,10 +47,10 @@ type Play struct {
 	UserID    string
 	Sound     *Sound
 
-	// The next play to occur after this, only used for chaining sounds like anotha
+//	The next play to occur after this, only used for chaining sounds like anotha
 	Next *Play
 
-	// If true, this was a forced play using a specific airhorn sound name
+//	If true, this was a forced play using a specific airhorn sound name
 	Forced bool
 }
 
@@ -67,16 +67,16 @@ type SoundCollection struct {
 type Sound struct {
 	Name string
 
-	// Weight adjust how likely it is this song will play, higher = more likely
+//	Weight adjust how likely it is this clip play, higher = more likely
 	Weight int
 
-	// Delay (in milliseconds) for the bot to wait before sending the disconnect request
+//	Delay (in milliseconds) for the bot to wait before sending the disconnect request
 	PartDelay int
 
-	// Channel used for the encoder routine
+//	Channel used for the encoder routine
 	encodeChan chan []int16
 
-	// Buffer to store encoded PCM packets
+//	Buffer to store encoded PCM packets
 	buffer [][]byte
 }
 
@@ -111,10 +111,10 @@ var CANNED *SoundCollection = &SoundCollection{
 		"!laughter",
 	},
 	Sounds: []*Sound{
-		createSound("01", 1, 250),
-		createSound("02", 1, 250),
-		createSound("03", 1, 250),
-		createSound("04", 1, 250),
+		createSound("1", 1, 250),
+		createSound("2", 1, 250),
+		createSound("3", 1, 250),
+		createSound("4", 1, 250),
 	},
 }
 
@@ -315,18 +315,18 @@ func (s *Sound) Encode() {
 	for {
 		pcm, ok := <-s.encodeChan
 		if !ok {
-			// if chan closed, exit
+//			if chan closed, exit
 			return
 		}
 
-		// try encoding pcm frame with Opus
+//		try encoding pcm frame with Opus
 		opus, err := encoder.Encode(pcm, 960, 960*2*2)
 		if err != nil {
 			fmt.Println("Encoding Error:", err)
 			return
 		}
 
-		// Append the PCM frame to our buffer
+//		Append the PCM frame to our buffer
 		s.buffer = append(s.buffer, opus)
 	}
 }
@@ -353,11 +353,11 @@ func (s *Sound) Load(c *SoundCollection) error {
 	}
 
 	for {
-		// read data from ffmpeg stdout
+//		read data from ffmpeg stdout
 		InBuf := make([]int16, 960*2)
 		err = binary.Read(stdout, binary.LittleEndian, &InBuf)
 
-		// If this is the end of the file, just return
+//		If this is the end of the file, just return
 		if err == io.EOF || err == io.ErrUnexpectedEOF {
 			return nil
 		}
@@ -367,7 +367,7 @@ func (s *Sound) Load(c *SoundCollection) error {
 			return err
 		}
 
-		// write pcm data to the encodeChan
+//		write pcm data to the encodeChan
 		s.encodeChan <- InBuf
 	}
 }
@@ -416,7 +416,7 @@ func randomRange(min, max int) int {
 
 // Prepares and enqueues a play into the ratelimit/buffer guild queue
 func enqueuePlay(user *discordgo.User, guild *discordgo.Guild, coll *SoundCollection, sound *Sound) {
-	// Grab the users voice channel
+//	Grab the user's voice channel
 	channel := getCurrentVoiceChannel(user, guild)
 	if channel == nil {
 		log.WithFields(log.Fields{
@@ -426,7 +426,7 @@ func enqueuePlay(user *discordgo.User, guild *discordgo.Guild, coll *SoundCollec
 		return
 	}
 
-	// Create the play
+//	Create the play
 	play := &Play{
 		GuildID:   guild.ID,
 		ChannelID: channel.ID,
@@ -435,13 +435,13 @@ func enqueuePlay(user *discordgo.User, guild *discordgo.Guild, coll *SoundCollec
 		Forced:    true,
 	}
 
-	// If we didn't get passed a manual sound, generate a random one
+//	If we didn't get passed a manual sound, generate a random one
 	if play.Sound == nil {
 		play.Sound = coll.Random()
 		play.Forced = false
 	}
 
-	// If the collection is a chained one, set the next sound
+//	If the collection is a chained one, set the next sound
 	if coll.ChainWith != nil {
 		play.Next = &Play{
 			GuildID:   play.GuildID,
@@ -452,8 +452,8 @@ func enqueuePlay(user *discordgo.User, guild *discordgo.Guild, coll *SoundCollec
 		}
 	}
 
-	// Check if we already have a connection to this guild
-	//   yes, this isn't threadsafe, but its "OK" 99% of the time
+//	Check if we already have a connection to this guild
+//	yes, this isn't threadsafe, but its "OK" 99% of the time
 	_, exists := queues[guild.ID]
 
 	if exists {
@@ -518,34 +518,34 @@ func playSound(play *Play, vc *discordgo.VoiceConnection) (err error) {
 		}
 	}
 
-	// If we need to change channels, do that now
+//	If we need to change channels, do that now
 	if vc.ChannelID != play.ChannelID {
 		vc.ChangeChannel(play.ChannelID, false, false)
 		time.Sleep(time.Millisecond * 125)
 	}
 
-	// Track stats for this play in redis
+//	Track stats for this play in redis
 	go trackSoundStats(play)
 
-	// Sleep for a specified amount of time before playing the sound
+//	Sleep for a specified amount of time before playing the sound
 	time.Sleep(time.Millisecond * 32)
 
-	// Play the sound
+//	Play the sound
 	play.Sound.Play(vc)
 
-	// If this is chained, play the chained sound
+//	If this is chained, play the chained sound
 	if play.Next != nil {
 		playSound(play.Next, vc)
 	}
 
-	// If there is another song in the queue, recurse and play that
+//	If there is another song in the queue, recurse and play that
 	if len(queues[play.GuildID]) > 0 {
 		play := <-queues[play.GuildID]
 		playSound(play, vc)
 		return nil
 	}
 
-	// If the queue is empty, delete it
+//	If the queue is empty, delete it
 	time.Sleep(time.Millisecond * time.Duration(play.Sound.PartDelay))
 	delete(queues, play.GuildID)
 	vc.Disconnect()
@@ -568,7 +568,7 @@ func onGuildCreate(s *discordgo.Session, event *discordgo.GuildCreate) {
 
 	for _, channel := range event.Guild.Channels {
 		if channel.ID == event.Guild.ID {
-			s.ChannelMessageSend(channel.ID, "**AIRHORN BOT READY FOR HORNING. TYPE `!AIRHORN` WHILE IN A VOICE CHANNEL TO ACTIVATE**")
+			s.ChannelMessageSend(channel.ID, "**WoofBot is ready to ruin the lives of many. Check out some of the commands at https://github.com/Keshwoof/WoofBot/wiki/Commands")
 			return
 		}
 	}
@@ -658,7 +658,7 @@ func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	// If this is a mention, it should come from the owner (otherwise we don't care)
+//	If this is a mention, it should come from the owner (otherwise we don't care)
 	if len(m.Mentions) > 0 {
 		if m.Mentions[0].ID == s.State.Ready.User.ID && m.Author.ID == OWNER && len(parts) > 0 {
 			handleBotControlMessages(s, m, parts, guild)
@@ -666,16 +666,16 @@ func onMessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	// If it's not relevant to our shard, just exit
+//	If it's not relevant to our shard, just exit
 	if !shardContains(guild.ID) {
 		return
 	}
 
-	// Find the collection for the command we got
+//	Find the collection for the command we got
 	for _, coll := range COLLECTIONS {
 		if scontains(parts[0], coll.Commands...) {
 
-			// If they passed a specific sound effect, find and select that (otherwise play nothing)
+//			If they passed a specific sound effect, find and select that (otherwise play nothing)
 			var sound *Sound
 			if len(parts) > 1 {
 				for _, s := range coll.Sounds {
@@ -709,7 +709,7 @@ func main() {
 		OWNER = *Owner
 	}
 
-	// Make sure shard is either empty, or an integer
+//	Make sure shard is either empty, or an integer
 	if *Shard != "" {
 		SHARDS = strings.Split(*Shard, ",")
 
@@ -724,13 +724,13 @@ func main() {
 		}
 	}
 
-	// Preload all the sounds
+//	Preload all the sounds
 	log.Info("Preloading sounds...")
 	for _, coll := range COLLECTIONS {
 		coll.Load()
 	}
 
-	// If we got passed a redis server, try to connect
+//	If we got passed a redis server, try to connect
 	if *Redis != "" {
 		log.Info("Connecting to redis...")
 		rcli = redis.NewClient(&redis.Options{Addr: *Redis, DB: 0})
@@ -744,7 +744,7 @@ func main() {
 		}
 	}
 
-	// Create a discord session
+//	Create a discord session
 	log.Info("Starting discord session...")
 	discord, err = discordgo.New(*Token)
 	if err != nil {
@@ -766,10 +766,10 @@ func main() {
 		return
 	}
 
-	// We're running!
+//	We're running!
 	log.Info("WoofBot is ready to make Discord horrible.")
 
-	// Wait for a signal to quit
+//	Wait for a signal to quit
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, os.Kill)
 	<-c
