@@ -104,78 +104,167 @@ var AIRHORN *SoundCollection = &SoundCollection{
 	},
 }
 
-var KHALED *SoundCollection = &SoundCollection{
-	Prefix:    "another",
-	ChainWith: AIRHORN,
+var CANNED *SoundCollection = &SoundCollection{
+	Prefix:    "canned",
 	Commands: []string{
-		"!anotha",
-		"!anothaone",
+		"!canned",
+		"!laughter",
 	},
 	Sounds: []*Sound{
-		createSound("one", 1, 250),
-		createSound("one_classic", 1, 250),
-		createSound("one_echo", 1, 250),
+		createSound("01", 1, 250),
+		createSound("02", 1, 250),
+		createSound("03", 1, 250),
+		createSound("04", 1, 250),
 	},
 }
 
-var CENA *SoundCollection = &SoundCollection{
-	Prefix: "jc",
+var DOUBLEDONK *SoundCollection = &SoundCollection{
+	Prefix: "doubledonk",
 	Commands: []string{
-		"!johncena",
-		"!cena",
+		"!doubledonk",
+		"!donk",
 	},
 	Sounds: []*Sound{
-		createSound("airhorn", 1, 250),
-		createSound("echo", 1, 250),
-		createSound("full", 1, 250),
-		createSound("jc", 1, 250),
-		createSound("nameis", 1, 250),
-		createSound("spam", 1, 250),
+		createSound("real", 1, 250),
 	},
 }
 
-var ETHAN *SoundCollection = &SoundCollection{
-	Prefix: "ethan",
+var DUDUDUDUDUDU *SoundCollection = &SoundCollection{
+	Prefix: "DUDUDUDUDUDU",
 	Commands: []string{
-		"!ethan",
-		"!eb",
-		"!ethanbradberry",
-		"!h3h3",
+		"!DUDUDUDUDUDU",
 	},
 	Sounds: []*Sound{
-		createSound("areyou_classic", 100, 250),
-		createSound("areyou_condensed", 100, 250),
-		createSound("areyou_crazy", 100, 250),
-		createSound("areyou_ethan", 100, 250),
-		createSound("classic", 100, 250),
-		createSound("echo", 100, 250),
-		createSound("high", 100, 250),
-		createSound("slowandlow", 100, 250),
-		createSound("cuts", 30, 250),
-		createSound("beat", 30, 250),
-		createSound("sodiepop", 1, 250),
+		createSound("distorted", 100, 250),
 	},
 }
 
-var COW *SoundCollection = &SoundCollection{
-	Prefix: "cow",
+var GOODJOB *SoundCollection = &SoundCollection{
+	Prefix: "goodjob",
 	Commands: []string{
-		"!stan",
-		"!stanislav",
+		"!goodjob",
+		"!gj",
 	},
 	Sounds: []*Sound{
-		createSound("herd", 10, 250),
-		createSound("moo", 10, 250),
-		createSound("x3", 1, 250),
+		createSound("1", 10, 250),
+	},
+}
+
+var JEOPARDY *SoundCollection = &SoundCollection{
+	Prefix: "jeopardy",
+	Commands: []string{
+		"!jeopardy",
+		"!waiting",
+	},
+	Sounds: []*Sound{
+		createSound("alternate", 10, 250),
+	},
+}
+
+var LODSOFEMONE *SoundCollection = &SoundCollection{
+	Prefix: "lodsofemone",
+	Commands: []string{
+		"!lodsofemone",
+		"!dosh",
+	},
+	Sounds: []*Sound{
+		createSound("1", 10, 250),
+		createSound("2", 10, 250),
+		createSound("3", 10, 250),
+		createSound("4", 10, 250),
+	},
+}
+
+var LOUDNIGRA *SoundCollection = &SoundCollection{
+	Prefix: "loudnigra",
+	Commands: []string{
+		"!loudnigra",
+		"!nigra",
+	},
+	Sounds: []*Sound{
+		createSound("default", 10, 250),
+		createSound("rainbowridemagicmissile", 10, 250),
+	},
+}
+
+var MGS *SoundCollection = &SoundCollection{
+	Prefix: "mgs",
+	Commands: []string{
+		"!mgs",
+	},
+	Sounds: []*Sound{
+		createSound("alert", 10, 250),
+	},
+}
+
+var SIRENS *SoundCollection = &SoundCollection{
+	Prefix: "sirens",
+	Commands: []string{
+		"!sirens",
+	},
+	Sounds: []*Sound{
+		createSound("1", 10, 250),
+		createSound("2", 10, 250),
+		createSound("3", 10, 250),
+	},
+}
+
+var VAPORWAVE *SoundCollection = &SoundCollection{
+	Prefix: "vaporwave",
+	Commands: []string{
+		"!vaporwave",
+		"!aesthetic",
+	},
+	Sounds: []*Sound{
+		createSound("MACINTOSHPLUS", 10, 250),
+	},
+}
+
+var WHYAMISOANGRY *SoundCollection = &SoundCollection{
+	Prefix: "whyamisoangry",
+	Commands: []string{
+		"!whyamisoangry",
+	},
+	Sounds: []*Sound{
+		createSound("whyamisomad", 10, 250),
+	},
+}
+
+var WONDERWALL *SoundCollection = &SoundCollection{
+	Prefix: "wonderwall",
+	Commands: []string{
+		"!wonderwall",
+	},
+	Sounds: []*Sound{
+		createSound("default", 10, 250),
+	},
+}
+
+var WOO *SoundCollection = &SoundCollection{
+	Prefix: "woo",
+	Commands: []string{
+		"!woo",
+	},
+	Sounds: []*Sound{
+		createSound("SOFUNNY", 10, 250),
 	},
 }
 
 var COLLECTIONS []*SoundCollection = []*SoundCollection{
 	AIRHORN,
-	KHALED,
-	CENA,
-	ETHAN,
-	COW,
+	CANNED,
+	DOUBLEDONK,
+	DUDUDUDUDUDU,
+	GOODJOB,
+	JEOPARDY,
+	LODSOFEMONE,
+	LOUDNIGRA,
+	MGS,
+	SIRENS,
+	VAPORWAVE,
+	WHYAMISOANGRY,
+	WONDERWALL,
+	WOO,
 }
 
 // Create a Sound struct
@@ -678,7 +767,7 @@ func main() {
 	}
 
 	// We're running!
-	log.Info("AIRHORNBOT is ready to horn it up.")
+	log.Info("WoofBot is ready to make Discord horrible.")
 
 	// Wait for a signal to quit
 	c := make(chan os.Signal, 1)
